@@ -1,0 +1,27 @@
+# Ignore Emacs backup, auto-save, and lock files
+*~
+\#*\#
+.\#*
+
+# Ignore compiled Emacs Lisp files
+*.elc
+*.eln
+
+# Ignore Doom Emacs build artifacts and cache
+.doom-emacs/.local/
+.doom-emacs/.cache/
+.doom-emacs/.config/
+
+# Ignore package management files
+straight/build/
+straight/repos/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+# Ignore Emacs temporary files
+*~
+*.elc
+# Ignore directories like backups or certain system files
+.#*
+.DS_Store
