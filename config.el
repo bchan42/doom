@@ -15,7 +15,7 @@
 ;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
 ;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
+;; - `doom-unicode-font' -- for unicode glyphs
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 ;;
 ;; See 'C-h v doom-font' for documentation and more examples of what they
@@ -31,10 +31,8 @@
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one)
-
-(setq doom-theme  'doom-solarized-dark) ;; change to another theme
+;; `load-theme' function. This is the default: (doom-one).
+(setq doom-theme 'doom-nord)
 ;; other popular themes: doom-one, doom-gruvbox, doom-dracula, doom-nord,
 ;; doom-solarized-dark, doom-soloraized-light, doom-material, doom-challenger-deep,
 ;; doom-vibrant, doom-losvkem
@@ -67,6 +65,7 @@
         ("d" "default" plain "%?"
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                             "#+title: ${title}\n") ;; default notes
+         :unnarrowed t)
         ("math" "math413" plain "%?"
          :if-new (file+head "math413/${slug}.org"
                             "#+title: ${title}\n") ;; math413 notes
@@ -93,11 +92,11 @@
          :immediate-finish t
          :unnarrowed t)))
 
-(use-package! org-roam
+(use-package org-roam
   :ensure t
   :custom
   (org-roam-directory (file-truename "~/notes/roam/"))
-  :bind (("C-c n l" . org-roam-buffer-toggle) ;; keybindings
+  :bind (("C-c n l" . org-roam-buffer-toggle) ;; keybinding
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
@@ -120,8 +119,7 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-
-(use-package! vterm ;; vterm is a terminal emulator
+(use-package vterm ;; vterm is a terminal emulator
   :ensure t
   :commands vterm)
 
