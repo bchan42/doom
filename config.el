@@ -93,7 +93,7 @@
          :immediate-finish t
          :unnarrowed t)))
 
-(use-package org-roam
+(use-package! org-roam
   :ensure t
   :custom
   (org-roam-directory (file-truename "~/notes/roam/"))
@@ -121,15 +121,9 @@
         org-roam-ui-open-on-start t))
 
 
-(use-package vterm ;; vterm is a terminal emulator
+(use-package! vterm ;; vterm is a terminal emulator
   :ensure t
   :commands vterm)
-
-(general-define-key
- :states 'insert
- "q" (general-key-dispatch 'self-insert-command
-       :timeout 0.25
-       "q" 'toggle-input-method))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
