@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default: (doom-one).
-(setq doom-theme 'doom-nord)
+(setq doom-theme 'doom-city-lights)
 ;; other popular themes: doom-one, doom-gruvbox, doom-dracula, doom-nord,
 ;; doom-solarized-dark, doom-soloraized-light, doom-material, doom-challenger-deep,
 ;; doom-vibrant, doom-losvkem
@@ -43,7 +43,8 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/notes/org/") ;; different location
+(setq org-directory "~/notes/") ;; different location
+(setq org-agenda-files '("~/notes/school.org"))
 
 
 (setq org-roam-directory (file-truename "~/notes/roam/")) ;; add config to org-roam
@@ -122,6 +123,37 @@
 (use-package vterm ;; vterm is a terminal emulator
   :ensure t
   :commands vterm)
+
+;; custom todo keywords
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "PROG(p)" "WAITING(w)" "REVISIT(r)" "|" "DONE(d)" "CANCELLED(c)")))
+
+
+;; change color of todo keywords
+;; (after! org
+;;   ;; Set custom faces for Org TODO keywords with muted colors and bold only for certain states
+;;   (custom-set-faces
+;;    '(org-todo ((t (:foreground "#D14F4F" :weight normal))))         ;; Muted red for TODO
+;;    '(org-prog ((t (:foreground "#D1C35B" :weight normal))))         ;; Muted yellow for PROG
+;;    '(org-waiting ((t (:foreground "#D18933" :weight normal))))      ;; Muted orange for WAITING
+;;    '(org-done ((t (:foreground "#7FBF7F" :weight normal))))         ;; Muted green for DONE
+;;    '(org-cancelled ((t (:foreground "#A0A0A0" :weight normal))))    ;; Muted gray for CANCELLED
+;;    '(org-revisit ((t (:foreground "#3B8D9E" :weight normal))))))    ;; Muted blue for REVISIT
+
+
+;; auto DONE after time passed for lectures/labs/meetings
+(defun my/org-auto-done-past ()
+  "Mark scheduled TODOs as DONE if their scheduled time is in the past."
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (let* ((scheduled-time (org-get-scheduled-time (point))))
+       (when (and scheduled-time
+                  (time-less-p scheduled-time (current-time))
+                  (not (org-entry-is-done-p)))
+         (org-todo 'done))))
+   "+TODO=\"TODO\""
+   'agenda))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
